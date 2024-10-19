@@ -1,0 +1,9 @@
+.idea/
+cmake-build-*/
+bazel-*/
+.clwb/
+*.gen.*
+.clangd
+out/
+.vs/
+Folder.DotSettings.user

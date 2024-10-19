@@ -1,0 +1,3 @@
+BasedOnStyle: Microsoft
+SortIncludes: Never
+InsertBraces: true
