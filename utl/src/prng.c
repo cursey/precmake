@@ -2,7 +2,7 @@
 #include "utl/const.h"
 #include "utl/prng.h"
 
-#define rotl(x, k) ((x << k) | (x >> (64 - k)))
+#define rotl(x, k) (((x) << (k)) | ((x) >> (64 - (k))))
 
 static u64 splitmix64(u64 *state)
 {

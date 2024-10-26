@@ -1,3 +1,4 @@
+#include "utl/thread.h"
 #include "utl/pe.h"
 
 PeSectionHdr *pe64_first_section(Bytes pe)
@@ -9,6 +10,27 @@ PeSectionHdr *pe64_first_section(Bytes pe)
     }
     return (PeSectionHdr *)((usize)nt_hdr + offset_of(PeNtHdr64, optional_header) +
                             nt_hdr->file_header.size_of_optional_header);
+}
+
+PeSectionHdr *pe64_find_section(Bytes pe, Str name)
+{
+    Temp scratch = scratch_begin(0, 0);
+    PeSectionHdr *section = pe64_first_section(pe);
+    PeSectionHdr *result = 0;
+    u8 *ext_name_buf = push_array(scratch.arena, u8, 8);
+    mem_copy(ext_name_buf, name.ptr, n_min(name.len, 8));
+    name.ptr = ext_name_buf;
+    name.len = 8;
+    for (u16 i = 0; i < pe64_nt_hdr(pe)->file_header.number_of_sections; ++i, ++section)
+    {
+        if (str_eq(name, make_str(section->name, 8)))
+        {
+            result = section;
+            break;
+        }
+    }
+    scratch_end(scratch);
+    return result;
 }
 
 PeNtHdr64 *pe64_nt_hdr(Bytes pe)

@@ -134,6 +134,9 @@ struct PeRuntimeFunctionEntry
 // Returns a pointer to the first section header of the given PE image.
 PeSectionHdr *pe64_first_section(Bytes pe);
 
+// Returns a pointer to the section header with the given name of the given PE image.
+PeSectionHdr *pe64_find_section(Bytes pe, Str name);
+
 // Returns a pointer to the NT header of the given PE image.
 PeNtHdr64 *pe64_nt_hdr(Bytes pe);
 

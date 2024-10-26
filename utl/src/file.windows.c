@@ -3,57 +3,6 @@
 #include "utl/utf.h"
 #include "utl/file.h"
 
-Bytes file_read_all(Arena *arena, Str path)
-{
-    Bytes result = {0};
-    Temp scratch = scratch_begin(&arena, 1);
-    Str16 path16 = str16_from_8(scratch.arena, path);
-    HANDLE file = CreateFileW(path16.ptr, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-    if (file != INVALID_HANDLE_VALUE)
-    {
-        LARGE_INTEGER file_size;
-        GetFileSizeEx(file, &file_size);
-        void *buf = push_array(arena, u8, file_size.QuadPart);
-        result.ptr = buf;
-        result.len = file_size.QuadPart;
-
-        // Read loop.
-        u64 total_read = 0;
-        while (total_read < file_size.QuadPart)
-        {
-            DWORD bytes_read;
-            ReadFile(file, (u8 *)buf + total_read, file_size.QuadPart, &bytes_read, 0);
-            total_read += bytes_read;
-        }
-        CloseHandle(file);
-    }
-    scratch_end(scratch);
-    return result;
-}
-
-bool file_write_all(Str path, Str data)
-{
-    bool result = false;
-    Temp scratch = scratch_begin(0, 0);
-    Str16 path16 = str16_from_8(scratch.arena, path);
-    HANDLE file = CreateFileW(path16.ptr, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
-    if (file != INVALID_HANDLE_VALUE)
-    {
-        // Write loop.
-        u64 total_written = 0;
-        while (total_written < data.len)
-        {
-            DWORD bytes_written;
-            WriteFile(file, data.ptr + total_written, data.len - total_written, &bytes_written, 0);
-            total_written += bytes_written;
-        }
-        CloseHandle(file);
-        result = true;
-    }
-    scratch_end(scratch);
-    return result;
-}
-
 StrList file_walk(Arena *arena, Str directory)
 {
     typedef struct Task Task;

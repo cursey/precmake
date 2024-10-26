@@ -133,3 +133,26 @@ u8 *bytes_scan_pattern(Bytes bytes, BytesPattern *pattern)
     }
     return result;
 }
+
+BytesNode *bytes_list_push(Arena *arena, BytesList *list, Bytes bytes)
+{
+    BytesNode *node = push_array_no_zero(arena, BytesNode, 1);
+    queue_push(list->head, list->tail, node);
+    ++list->node_count;
+    list->total_len += bytes.len;
+    node->bytes = bytes;
+    return node;
+}
+
+Bytes bytes_list_flatten(Arena *arena, BytesList *list)
+{
+    Bytes result;
+    result.ptr = push_array(arena, u8, list->total_len);
+    result.len = 0;
+    for (BytesNode *node = list->head; node; node = node->next)
+    {
+        mem_copy(result.ptr + result.len, node->bytes.ptr, node->bytes.len);
+        result.len += node->bytes.len;
+    }
+    return result;
+}

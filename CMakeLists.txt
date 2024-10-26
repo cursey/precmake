@@ -28,17 +28,12 @@ target_include_directories(lua PUBLIC
 file(GLOB glob_1 utl/src/*.c)
 if(NOT WIN32)
     LIST(FILTER glob_1 EXCLUDE REGEX
-        .*win32.c$
+        .*windows.c$
     )
 endif()
-if(NOT APPLE)
+if(NOT UNIX)
     LIST(FILTER glob_1 EXCLUDE REGEX
-        .*macos.c$
-    )
-endif()
-if(NOT UNIX OR APPLE)
-    LIST(FILTER glob_1 EXCLUDE REGEX
-        .*linux.c$
+        .*posix.c$
     )
 endif()
 add_library( utl STATIC

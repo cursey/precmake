@@ -217,6 +217,7 @@ void package_push_option(Arena *arena, Package *package, Str option);
 
 // ListOp
 void list_op_push_item(Arena *arena, ListOp *operation, Str item);
+void list_op_push_condition(ListOp *exclusion, Condition *condition);
 
 // ListOpList
 void list_op_list_push(ListOpList *list, ListOp *exclusion);

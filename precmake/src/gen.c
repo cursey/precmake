@@ -325,7 +325,7 @@ static void gen_glob(GenContext *ctx, Glob *glob)
 // When
 //
 
-void gen_thing(GenContext *ctx, Thing *thing);
+static void gen_thing(GenContext *ctx, Thing *thing);
 
 static void gen_when(GenContext *ctx, When *when)
 {

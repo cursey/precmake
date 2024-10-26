@@ -15,9 +15,8 @@ lua:public_include_directories{'$<BUILD_INTERFACE:${lua_SOURCE_DIR}>'}
 
 -- utl
 local utl_sources = glob('utl/src/*.c')
-utl_sources:exclude('.*win32.c$'):when{'NOT WIN32'}
-utl_sources:exclude('.*macos.c$'):when{'NOT APPLE'}
-utl_sources:exclude('.*linux.c$'):when{'NOT UNIX OR APPLE'}
+utl_sources:exclude('.*windows.c$'):when{'NOT WIN32'}
+utl_sources:exclude('.*posix.c$'):when{'NOT UNIX'}
 local utl = static_library('utl', {utl_sources})
 utl:public_include_directories{'utl/include'}
 
