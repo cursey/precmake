@@ -12,6 +12,7 @@ local lua_sources = glob('${lua_SOURCE_DIR}/*.c')
 lua_sources:remove{'${lua_SOURCE_DIR}/lua.c', '${lua_SOURCE_DIR}/luac.c', '${lua_SOURCE_DIR}/onelua.c'}
 local lua = static_library('lua', {lua_sources})
 lua:public_include_directories{'$<BUILD_INTERFACE:${lua_SOURCE_DIR}>'}
+lua:public_link_libraries{'m'}:when{'UNIX'}
 
 -- utl
 local utl_sources = glob('vendor/utl/src/*.c')
