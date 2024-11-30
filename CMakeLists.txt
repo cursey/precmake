@@ -25,6 +25,11 @@ add_library( lua STATIC
 target_include_directories(lua PUBLIC
     $<BUILD_INTERFACE:${lua_SOURCE_DIR}>
 )
+if(UNIX)
+    target_link_libraries(lua PUBLIC
+        m
+    )
+endif()
 file(GLOB glob_1 vendor/utl/src/*.c)
 if(NOT WIN32)
     LIST(FILTER glob_1 EXCLUDE REGEX
