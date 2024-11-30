@@ -42,7 +42,7 @@ add_library( utl STATIC
 target_include_directories(utl PUBLIC
     vendor/utl/include
 )
-file(GLOB glob_2 precmake/src/*.c)
+file(GLOB glob_2 src/*.c)
 add_executable( precmake 
     ${glob_2}
 )

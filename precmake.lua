@@ -21,7 +21,7 @@ local utl = static_library('utl', {utl_sources})
 utl:public_include_directories{'vendor/utl/include'}
 
 -- precmake
-local precmake_sources = glob('precmake/src/*.c')
+local precmake_sources = glob('src/*.c')
 local precmake = executable('precmake', {precmake_sources})
 precmake:private_link_libraries{utl, lua}
 
