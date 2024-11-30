@@ -14,11 +14,11 @@ local lua = static_library('lua', {lua_sources})
 lua:public_include_directories{'$<BUILD_INTERFACE:${lua_SOURCE_DIR}>'}
 
 -- utl
-local utl_sources = glob('utl/src/*.c')
+local utl_sources = glob('vendor/utl/src/*.c')
 utl_sources:exclude('.*windows.c$'):when{'NOT WIN32'}
 utl_sources:exclude('.*posix.c$'):when{'NOT UNIX'}
 local utl = static_library('utl', {utl_sources})
-utl:public_include_directories{'utl/include'}
+utl:public_include_directories{'vendor/utl/include'}
 
 -- precmake
 local precmake_sources = glob('precmake/src/*.c')

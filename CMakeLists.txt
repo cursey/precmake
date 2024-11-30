@@ -25,7 +25,7 @@ add_library( lua STATIC
 target_include_directories(lua PUBLIC
     $<BUILD_INTERFACE:${lua_SOURCE_DIR}>
 )
-file(GLOB glob_1 utl/src/*.c)
+file(GLOB glob_1 vendor/utl/src/*.c)
 if(NOT WIN32)
     LIST(FILTER glob_1 EXCLUDE REGEX
         .*windows.c$
@@ -40,7 +40,7 @@ add_library( utl STATIC
     ${glob_1}
 )
 target_include_directories(utl PUBLIC
-    utl/include
+    vendor/utl/include
 )
 file(GLOB glob_2 precmake/src/*.c)
 add_executable( precmake 
